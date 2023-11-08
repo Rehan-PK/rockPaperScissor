@@ -4,7 +4,14 @@ function getComputerChoice() {
     return choices[Math.floor(Math.random() * 3)].toLowerCase();
 }
 
-const playerSelection = "rock".toLowerCase();
+// const playerSelection = "rock".toLowerCase();
+
+let playerSelection = prompt("Input your option ?").toLowerCase();
+if (playerSelection === 'rock' || playerSelection === 'paper' || playerSelection === 'scissors') {
+    playerSelection;
+} else {
+    alert("You entered incorrect option, please refresh page to play again");
+}
 
 const computerSelection = getComputerChoice();
 
@@ -14,29 +21,33 @@ function playRound(playerSelection, computerSelection) {
     // play a single round
     if (playerSelection === 'rock') {
         if (computerSelection === 'rock') {
-            return "rock doesn't beat rock";
+            return "It's a draw! Rock doesn't beat Rock";
         } else if (computerSelection === 'paper') {
-            return "paper beats rock";
+            return "You Lose! Paper beats Rock";
         } else {
-            return "rock beats scissors";
+            return "You Win! Rock beats Scissors";
         }
     } else if (playerSelection === 'paper') {
         if (computerSelection === 'rock') {
-            return "paper beats rock";
+             return "You Win! Paper beats Rock";
         } else if (computerSelection === 'paper') {
-            return "paper doesn't beat paper";
+            return "It's a draw! Paper doesn't beat Paper";
         } else {
-            return "scissors beat paper";
+            return "You Lose! Scissors beat Paper";
         }
     } else {
         if (computerSelection === 'rock') {
-            return "rock beats scissors";
+            return "You Lose! Rock beats Scissors";
         } else if (computerSelection === 'paper') {
-            return "scissors beat paper";
+            return "You Win! Scissors beat Paper";
         } else {
-            return "scissors don't beat scissors";
+            return "It's a draw! Scissors don't beat Scissors";
         }
     }
+}
+
+function game() {
+
 }
 
 console.log(playRound(playerSelection, computerSelection));
