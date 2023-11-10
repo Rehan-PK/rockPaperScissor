@@ -1,12 +1,16 @@
+// declare variables
 const choices = ['Rock', 'Paper', 'Scissors'];
 let playerSelection;
 let computerSelection;
-// const playerSelection = "rock".toLowerCase();
+let playerScore = 0;
+let computerScore = 0;
 
+// get random choice of computer from rock, paper, scissors
 function getComputerChoice() {
     return choices[Math.floor(Math.random() * 3)].toLowerCase();
 }
 
+// get player choice from rock, paper, scissors
 function getPlayerSelection() {
     playerSelection = prompt("Input your option ?").toLowerCase();
     if (playerSelection === 'rock' || playerSelection === 'paper' || playerSelection === 'scissors') {
@@ -17,28 +21,35 @@ function getPlayerSelection() {
     }
 }
 
+// play a single round & return outcome
 function playRound(playerSelection, computerSelection) {
     // play a single round
     if (playerSelection === 'rock') {
         if (computerSelection === 'rock') {
             return "It's a draw! Rock doesn't beat Rock";
         } else if (computerSelection === 'paper') {
+            ++computerScore;
             return "You Lose! Paper beats Rock";
         } else {
+            ++playerScore;
             return "You Win! Rock beats Scissors";
         }
     } else if (playerSelection === 'paper') {
         if (computerSelection === 'rock') {
-             return "You Win! Paper beats Rock";
+            ++playerScore;
+            return "You Win! Paper beats Rock";
         } else if (computerSelection === 'paper') {
             return "It's a draw! Paper doesn't beat Paper";
         } else {
+            ++computerScore;
             return "You Lose! Scissors beat Paper";
         }
     } else {
         if (computerSelection === 'rock') {
+            ++computerScore;
             return "You Lose! Rock beats Scissors";
         } else if (computerSelection === 'paper') {
+            ++playerScore;
             return "You Win! Scissors beat Paper";
         } else {
             return "It's a draw! Scissors don't beat Scissors";
@@ -46,35 +57,63 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game() {    
-    // play a 5 round game
-    let playerScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        playerSelection = getPlayerSelection();
-        computerSelection = getComputerChoice();
-        
-        let result = playRound(playerSelection, computerSelection);
-        let winner = result.substring(0, 7);
+// create 3 buttons, one for each selection 
+// => done in html file
 
-        if (winner === 'You Win') {
-            playerScore++;
-        } else if (winner === 'You Los') {
-            computerScore++;
-        } else {
-            true;
-        }
-        console.log(result);
-        console.log(`Player Score: ${playerScore}, Computer Score: ${computerScore}`);
-    }
-    
-    // report winner / looser at end
-    if (playerScore > computerScore) {
-        return "Congratulations! You have defeated the computer & won!";
-    } else if (playerScore < computerScore) {
-        return "Alas! You have lost to the cyborg :("
+// check for winner, return status
+function checkWinner() {
+    if (playerScore === 5) {
+        return `Congratulations! You have won. Your score: ${playerScore}, Computer score: ${computerScore}`;
+    } else if (computerScore === 5) {
+        return `Alas! You have lost. Your score: ${playerScore}, Computer score: ${computerScore}`;
     } else {
-        return "You are as smarter as a computer - result is a tie!"
+        return `${playerScore} `;
     }
-
 }
+
+// add div for displaying results & change all of your console.log into DOM methods
+const result = document.querySelector('#result');
+
+
+// add an event listener to the buttons that call your playRound function
+const rock = document.querySelector('#rock');
+rock.addEventListener('click', () => {
+    computerSelection = getComputerChoice();
+    playerSelection = 'rock';
+    // with the correct playerSelection every time the button is clicked (may keep console.log for this step)
+    playRound(playerSelection, computerSelection);
+    // display running score, and announce a winner of the game once one player reaches 5 points
+    result.textContent += `${checkWinner()} `;
+    // console.log(result);
+});
+
+const paper = document.querySelector('#paper');
+paper.addEventListener('click', () => {
+    computerSelection = getComputerChoice();
+    playerSelection = 'paper';
+    // with the correct playerSelection every time the button is clicked (may keep console.log for this step)
+    playRound(playerSelection, computerSelection);
+    // display running score, and announce a winner of the game once one player reaches 5 points
+    result.textContent += `${checkWinner()} `;
+    // console.log(result);
+});
+
+const scissors = document.querySelector('#scissors');
+scissors.addEventListener('click', () => {
+    computerSelection = getComputerChoice();
+    playerSelection = 'scissors';
+    // with the correct playerSelection every time the button is clicked (may keep console.log for this step)
+    playRound(playerSelection, computerSelection);
+    // display running score, and announce a winner of the game once one player reaches 5 points
+    result.textContent += `${checkWinner()} `;
+    // console.log(result);
+});
+
+
+
+
+
+// once done with UI, commit changes to rps-ui before continuing
+
+// further, follow TOP page for merging these changes
+
